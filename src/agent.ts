@@ -70,7 +70,7 @@ export async function createProductionAgent(config: AgentConfig = {}) {
   });
 
   // Create agent with tools
-  const agent = await createOpenAIFunctionsAgent({
+  const agent = await (createOpenAIFunctionsAgent as any)({
     llm,
     tools: allTools,
     prompt,
