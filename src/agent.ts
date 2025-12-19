@@ -15,7 +15,7 @@
 import { ChatOpenAI } from '@langchain/openai';
 import { AgentExecutor, createOpenAIFunctionsAgent } from 'langchain/agents';
 import { BufferMemory } from 'langchain/memory';
-import { allTools } from './tools';
+import { allTools } from './tools.ts';
 import 'dotenv/config';
 
 /**
