@@ -16,7 +16,7 @@ import { ChatOpenAI } from '@langchain/openai';
 import { AgentExecutor, createOpenAIFunctionsAgent } from 'langchain/agents';
 import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
 import { BufferMemory } from 'langchain/memory';
-import { allTools } from './tools.js';
+import { allTools } from './tools.ts';
 import 'dotenv/config';
 
 /**
@@ -54,7 +54,6 @@ export async function createProductionAgent(config: AgentConfig = {}) {
     maxTokens,
     openAIApiKey: process.env.OPENAI_API_KEY,
     // Enable LangSmith tracing
-    callbacks: [],
   });
 
   // Create professional system prompt
@@ -113,11 +112,12 @@ Current datetime: {datetime}
     agent,
     tools: allTools,
     memory,
-    verbose,
     maxIterations,
     // Handle tool errors gracefully
     handleParsingErrors: true,
-  });
+    // Cast to any to accommodate differing LangChain typings across versions
+    verbose,
+  } as any);
 
   return executor;
 }

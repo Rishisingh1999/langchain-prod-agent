@@ -13,6 +13,7 @@
  * @version 1.0.0
  */
 
+import 'dotenv/config';
 import { Tool } from '@langchain/core/tools';
 import { createClient } from '@supabase/supabase-js';
 import { OpenAIEmbeddings } from '@langchain/openai';

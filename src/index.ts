@@ -13,8 +13,8 @@
  * @author Your Name <your.email@example.com>
  */
 
-import { createProductionAgent, runAgent, batchProcess } from './agent.js';
 import 'dotenv/config';
+import { createProductionAgent, runAgent, batchProcess } from './agent.ts';
 import * as readline from 'readline';
 
 /**
