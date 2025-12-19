@@ -14,7 +14,7 @@
  */
 
 import 'dotenv/config';
-import { createProductionAgent, runAgent, batchProcess } from './agent.ts';
+import { createProductionAgent, runAgent, batchProcess } from './agent';
 import * as readline from 'readline';
 
 /**

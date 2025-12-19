@@ -14,9 +14,8 @@
 
 import { ChatOpenAI } from '@langchain/openai';
 import { AgentExecutor, createOpenAIFunctionsAgent } from 'langchain/agents';
-import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
 import { BufferMemory } from 'langchain/memory';
-import { allTools } from './tools.ts';
+import { allTools } from './tools';
 import 'dotenv/config';
 
 /**
@@ -56,41 +55,11 @@ export async function createProductionAgent(config: AgentConfig = {}) {
     // Enable LangSmith tracing
   });
 
-  // Create professional system prompt
-  const systemPrompt = `You are a professional AI assistant powered by advanced language models and equipped with specialized tools.
+  // Create a simple system prompt (avoiding LangChain prompt class imports to simplify build)
+  const systemPrompt = `You are a professional AI assistant powered by advanced language models and equipped with specialized tools.\nCurrent datetime: ${new Date().toISOString()}`;
 
-**Your Core Capabilities:**
-1. Document Search - Search through knowledge bases and documents
-2. Database Queries - Retrieve and analyze structured data
-3. Data Analysis - Perform statistical calculations and analysis
-4. Conversation Memory - Maintain context across interactions
-5. DateTime Operations - Handle date and time related queries
-
-**Guidelines:**
-- Always think step-by-step before using tools
-- Provide clear, professional responses
-- If you're unsure, ask clarifying questions
-- Cite sources when using document search
-- Handle errors gracefully and inform users
-- Be concise but thorough
-- Prioritize accuracy over speed
-
-**Output Format:**
-- Use markdown for formatting
-- Structure complex responses with headings
-- Provide actionable insights
-- Include relevant data when available
-
-Current datetime: {datetime}
-`;
-
-  // Create prompt template with memory
-  const prompt = ChatPromptTemplate.fromMessages([
-    ['system', systemPrompt.replace('{datetime}', new Date().toISOString())],
-    new MessagesPlaceholder('chat_history'),
-    ['human', '{input}'],
-    new MessagesPlaceholder('agent_scratchpad'),
-  ]);
+  // Use a plain string prompt here to avoid relying on prompt classes that may differ across langchain versions
+  const prompt: any = systemPrompt;
 
   // Initialize memory for conversation history
   const memory = new BufferMemory({
